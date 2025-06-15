@@ -1,69 +1,53 @@
 import SimpleLightbox from 'simplelightbox';
+
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
-import '../css/loader.css';
+const simplelightbox = new SimpleLightbox('.gallery a', {
+  captions: true,
+  captionSelector: 'self',
+  captionType: 'attr',
+  captionsData: 'title',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
+const galleryELem = document.querySelector('.gallery');
 
-const gallery = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
-let lightbox;
-export function clearGallery() {
-  gallery.innerHTML = '';
-}
-export function renderImages(images) {
-  if (!gallery) {
-    console.error('Gallery element not found!');
-    return;
-  }
-
+function createGallery(images) {
   const markup = images
     .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags = 'No description',
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => `
+      image => `
         <li class="gallery-item">
-          <a href="${largeImageURL}" class="gallery-link">
-            <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+          <a class="gallery-link" href="${image.largeImageURL}" title="${image.tags}">
+            <img
+              class="gallery-image"
+              src="${image.webformatURL}"
+              alt="${image.tags}"
+            />
           </a>
-          <div class="info">
-            <p><strong>Likes:</strong> ${likes}</p>
-            <p><strong>Views:</strong> ${views}</p>
-            <p><strong>Comments:</strong> ${comments}</p>
-            <p><strong>Downloads:</strong> ${downloads}</p>
+          <div class="gallery-info">
+            <p><b>Likes:</b> ${image.likes}</p>
+            <p><b>Views:</b> ${image.views}</p>
+            <p><b>Comments:</b> ${image.comments}</p>
+            <p><b>Downloads:</b> ${image.downloads}</p>
           </div>
         </li>`
     )
     .join('');
-
-  gallery.insertAdjacentHTML('beforeend', markup);
-
-  if (!lightbox) {
-    lightbox = new SimpleLightbox('.gallery a');
-  } else {
-    lightbox.refresh();
-  }
+  galleryELem.insertAdjacentHTML('beforeend', markup);
+  simplelightbox.refresh();
 }
 
-export function showLoader() {
-  if (loader) {
-    loader.style.display = 'block';
-  }
+function clearGallery() {
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = '';
 }
-export function hideLoader() {
-  setTimeout(() => {
-    if (loader) {
-      loader.style.display = 'none';
-      console.log('Loader hidden');
-    }
-  }, 500);
+function showLoader() {
+  const loader = document.querySelector('.loader');
+  loader.classList.remove('is-hidden');
 }
-console.log(loader);
-export function showError(message) {
-  iziToast.error({ title: 'Error', message });
+
+function hideLoader() {
+  const loader = document.querySelector('.loader');
+  loader.classList.add('is-hidden');
 }
+
+export { createGallery, clearGallery, showLoader, hideLoader };
