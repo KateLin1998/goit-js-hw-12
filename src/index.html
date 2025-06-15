@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-  </head>
-  <body>
-    <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
 
-    <main>
-      <!-- Loads the specified .html file -->
-      <load src="./partials/vite-promo.html" />
-      <load src="./partials/badges.html" />
-    </main>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>goit-js-hw-11</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
 
-    <load src="./partials/footer.html" />
+<body>
+  <form class="js-search search">
+    <input class="input-search" name="search" type="text" placeholder="Enter search term" />
+    <button class="btn-search" type="submit">Search</button>
+  </form>
+  <div class="container">
+    <ul class="gallery"></ul>
+    <div class="footer-gallery">
+      <button class="btn-load-more is-hidden" type="submit">Load more</button>
+      <p class="end-text is-hidden">
+        We're sorry, but you've reached the end of search results.
+      </p>
+      <div class="loader is-hidden"></div>
+    </div>
+  </div>
 
-    <script type="module" src="./main.js"></script>
-  </body>
+  <script type="module" src="./main.js"></script>
+</body>
+
 </html>
