@@ -50,4 +50,21 @@ function hideLoader() {
   loader.classList.add('is-hidden');
 }
 
-export { createGallery, clearGallery, showLoader, hideLoader };
+function showLoadMoreBtn() {
+  const btn = document.querySelector('.load-more');
+  btn.classList.remove('is-hidden');
+}
+
+function hideLoadMoreBtn() {
+  const btn = document.querySelector('.load-more');
+  btn.classList.add('is-hidden');
+}
+
+export {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+  showLoadMoreBtn,
+  hideLoadMoreBtn,
+};

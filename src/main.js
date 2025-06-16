@@ -4,6 +4,8 @@ import {
   clearGallery,
   showLoader,
   hideLoader,
+  showLoadMoreBtn,
+  hideLoadMoreBtn,
 } from './js/render-functions.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
@@ -30,7 +32,7 @@ form.addEventListener('submit', async event => {
   currentQuery = query;
   currentPage = 1;
   clearGallery();
-  hideLoadMoreButton();
+  hideLoadMoreBtn();
   showLoader();
 
   try {
@@ -48,7 +50,7 @@ form.addEventListener('submit', async event => {
     createGallery(data.hits);
 
     if (totalHits > currentPage * 15) {
-      showLoadMoreButton();
+      showLoadMoreBtn();
     }
   } catch (error) {
     iziToast.error({
@@ -63,7 +65,7 @@ form.addEventListener('submit', async event => {
 loadMoreBtn.addEventListener('click', async () => {
   currentPage += 1;
   showLoader();
-  hideLoadMoreButton();
+  hideLoadMoreBtn();
 
   try {
     const data = await getImagesByQuery(currentQuery, currentPage);
@@ -71,13 +73,13 @@ loadMoreBtn.addEventListener('click', async () => {
 
     const totalLoaded = currentPage * 15;
     if (totalLoaded >= totalHits) {
-      hideLoadMoreButton();
+      hideLoadMoreBtn();
       iziToast.info({
         message: 'Ви завантажили всі доступні зображення',
         position: 'topRight',
       });
     } else {
-      showLoadMoreButton();
+      showLoadMoreBtn();
     }
 
     smoothScroll();
@@ -100,10 +102,4 @@ function smoothScroll() {
     behavior: 'smooth',
   });
 }
-function showLoadMoreButton() {
-  loadMoreBtn.classList.remove('is-hidden');
-}
 
-function hideLoadMoreButton() {
-  loadMoreBtn.classList.add('is-hidden');
-}
